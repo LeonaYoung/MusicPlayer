@@ -1,0 +1,67 @@
+<div class="player">
+
+  <div class="title">
+    <p>{{selectedAudio?.title}}<br>
+    {{selectedAudio?.singer}}</p>
+  </div>
+
+  <div id="jasmine_content">
+    <div (click)="test()" [hidden]="lyricOrCd">
+      <img [src]="selectedAudio?.img" class="img-circle" >
+    </div>
+    <div (click)="test()" [hidden]="!lyricOrCd"  id="lyr">
+    </div>
+
+    <!-- <p>{{line}}</p>    -->
+  </div>
+
+  <div >
+    <div class="row">
+      <div class="col-xs-2">
+        <time>{{myAudio.currentTime | audioTime}}</time>
+      </div>
+      <div class="col-xs-8">
+        <div id="range">
+          <input id="mySlider"
+                 name="range"
+                 type="range"
+                 min="0"
+                 max="1000"
+                 step="1"
+                 [(ngModel)]="completed"
+                 (input)="changeRange(input.value)"
+                 #input>
+        </div>
+      </div>
+      <div class="col-xs-2" >
+        <time>{{myAudio.duration | audioTime}}</time>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-default" (click)="playModeSelect()" >
+          <span *ngIf="isCycle" class="glyphicon glyphicon-retweet" ></span>
+          <span *ngIf="isSingle" class="glyphicon glyphicon-repeat" ></span>
+          <span *ngIf="isRandom" class="glyphicon glyphicon-random"></span>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-default" (click)="playBackward()">
+          <span class="glyphicon glyphicon-step-backward"></span>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-default" (click)="playOrPause()">
+          <span class="glyphicon glyphicon-play" aria-hidden="false" *ngIf="!isPlay"></span>
+          <span class="glyphicon glyphicon-pause" aria-hidden="true" *ngIf="isPlay"></span>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-default" (click)="playForward()">
+          <span class="glyphicon glyphicon-step-forward"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+div.player{
+    width: 400px;
+    height: 600px;
+    background-color: aquamarine;
+}
+
+div.title{
+    text-align: center;
+}
+
+#jasmine_content{
+
+
+}
+
+#lyr{
+    height: 400px;
+    width: 400px;
+    overflow: scroll;
+    text-align: center;
+    line-height: 25px;
+}
+
+p:first-line{
+    font-size: 20px;
+    color: #000;
+}
+
+
