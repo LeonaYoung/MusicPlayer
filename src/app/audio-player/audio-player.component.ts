@@ -54,62 +54,10 @@ export class AudioPlayerComponent implements OnInit,OnDestroy{
   private completed: number = 0;
   private isLoad = false;
   private hasLoaded = false;
-
   private lyrics ;
   private lyricId: number[] =[];
 
-  getLyrics(){
-    //将歌词字符串拆分成数组
-    this.lyrics = this.lyric.split("\n");
 
-    //去除数组中为空的字符串
-    for(let i=0;i<this.lyrics.length;i++){
-      if(this.lyrics[i]==''){
-        this.lyrics.splice(i,1);
-      }
-    }
-
-    //获取歌词数组和时间戳数组
-    for(let i = 0;i<this.lyrics.length; i++){
-      var lyric = decodeURIComponent(this.lyrics[i]);
-      var timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
-      var timeRegExpArr = lyric.match(timeReg);
-      if (!timeRegExpArr) continue;
-      var clause = lyric.replace(timeReg, '');
-      this.lyrics[i] = clause;
-
-      for (let k = 0, h = timeRegExpArr.length; k < h; k++) {
-        var t = timeRegExpArr[k];
-        var min = Number(String(t.match(/\[\d*/i)).slice(1));
-        var sec = Number(String(t.match(/\:\d*/i)).slice(1));
-        var time = min * 60 + sec;
-      }
-      this.lyricId[i] = time;
-    }
-
-    //去除歌词数组中为空的对象，以及时间戳数组中对应的对象
-    for(let j=0;j<this.lyrics.length;j++){
-      if(this.lyrics[j] == ''){
-        this.lyrics.splice(j,1);
-        this.lyricId.splice(j,1);
-      }
-    }
-
-  }
-
-  /*************
-  pos = 0;
-  dos = 0;
-  get line() {
-    return this.lyrics[this.pos];
-  }
-  ngAfterViewInit(){
-    if(this.pos < this.lyrics.length){
-      setInterval(()=> this.pos = (this.pos+1)%4, 1500);
-    }
-  }
-
-   ******************/
 
   createAudio() {
     this.myAudio = new Audio();
@@ -150,13 +98,10 @@ export class AudioPlayerComponent implements OnInit,OnDestroy{
       //this.networkState(e);
       //console.log(e);
       //console.log(this.myAudio.networkState);
-
     },false);
   }
 
-  private x =0;
   private scrollh = 0;
-  private delay = 10;
 
   onTimeUpdate(e) {
     if (this.isPlay && this.myAudio.duration > 0) {
@@ -164,26 +109,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy{
       this.completed = Math.round((this.myAudio.currentTime / this.myAudio.duration) * 1000);
     }
 
-
-
-    /*************************
-     if(this.myAudio.currentTime < this.lyricId[this.x]){
-      this.pos = this.x;
-      this.x = this.x+1;
-    }
-
-     if(Math.round(this.myAudio.currentTime) == this.lyricId[this.x]){
-      this.pos = this.x;
-      this.x = this.x+1;
-      div1.innerHTML += "<font color=red>"+this.lyrics[this.x-1]+"</font><br>"
-    }else {
-      console.log(this.lyricId[this.x],this.myAudio.currentTime);
-    }
-     ***********************/
     let div1 = document.getElementById('lyr');
     document.getElementById("lyr").innerHTML = " ";
-   // console.log('scrollHeight:',div1.scrollHeight);
-
 
     if(this.myAudio.currentTime<this.lyricId[this.lyricId.length-1]){
       if (this.myAudio.currentTime < this.lyricId[1]) {
@@ -207,17 +134,49 @@ export class AudioPlayerComponent implements OnInit,OnDestroy{
       div1.innerHTML += this.lyrics[j] + "<br>";
       div1.innerHTML += "<font  color=red  style=font-weight:bold>" + this.lyrics[this.lyrics.length - 1] + "</font><br>";
     }
-    //this.scrollBar();
+
+    if(Math.round(this.myAudio.currentTime)==this.lyricId[this.scrollh/25]){
+      document.getElementById("lyr").scrollTop=this.scrollh;
+    }
   }
 
-  scrollBar(){
-    if(document.getElementById("lyr").scrollTop<=this.scrollh)
-      document.getElementById("lyr").scrollTop+=1;
-    if(document.getElementById("lyr").scrollTop>=this.scrollh+50)
-      document.getElementById("lyr").scrollTop-=1;
-    window.setTimeout(this.scrollBar(),this.delay);
-  }
+  getLyrics(){
+    //将歌词字符串拆分成数组
+    this.lyrics = this.lyric.split("\n");
 
+    //去除数组中为空的字符串
+    for(let i=0;i<this.lyrics.length;i++){
+      if(this.lyrics[i]==''){
+        this.lyrics.splice(i,1);
+      }
+    }
+
+    //获取歌词数组和时间戳数组
+    for(let i = 0;i<this.lyrics.length; i++){
+      var lyric = decodeURIComponent(this.lyrics[i]);
+      var timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
+      var timeRegExpArr = lyric.match(timeReg);
+      if (!timeRegExpArr) continue;
+      var clause = lyric.replace(timeReg, '');
+      this.lyrics[i] = clause;
+
+      for (let k = 0, h = timeRegExpArr.length; k < h; k++) {
+        var t = timeRegExpArr[k];
+        var min = Number(String(t.match(/\[\d*/i)).slice(1));
+        var sec = Number(String(t.match(/\:\d*/i)).slice(1));
+        var time = min * 60 + sec;
+      }
+      this.lyricId[i] = time;
+    }
+
+    //去除歌词数组中为空的对象，以及时间戳数组中对应的对象
+    for(let j=0;j<this.lyrics.length;j++){
+      if(this.lyrics[j] == ''){
+        this.lyrics.splice(j,1);
+        this.lyricId.splice(j,1);
+      }
+    }
+  }
 
   onErrorCase(error){
     switch (error.code){

@@ -26,7 +26,8 @@ div.title{
     text-align: center;
     line-height: 25px;
     letter-spacing: 0.4px;
-    padding-bottom: 25px;
+    padding-bottom: 200px;
+    padding-top: 200px;
 }
 
 p:first-line{

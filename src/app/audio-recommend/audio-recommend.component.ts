@@ -48,12 +48,14 @@ export class AudioRecommendComponent implements OnInit, AfterViewInit {
   ngOnInit() {
    var tt = this.parseLyric(this.lyric2);
 
-    console.log(tt);
+    //console.log(tt);
   }
 
   scrollTo(){
     let lyricB = document.getElementById('lyricBox');
-    document.getElementById('lyricBox').scrollTop = 400;
+    document.getElementById('lyricBox').scrollTop += 30;
+    console.log('scrollHight:',lyricB.scrollHeight);
+    console.log('clientHight:',lyricB.clientHeight);
 
   }
 

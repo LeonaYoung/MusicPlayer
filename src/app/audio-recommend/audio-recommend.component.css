@@ -1,15 +1,16 @@
 .container{
     border:2px solid blue;
-    height: 500px;
+    height: 600px;
     width: 400px;
     margin-left: 10px;
     overflow: scroll;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-bottom: 300px;
+    padding-top: 300px;
     text-align: center;
 }
 
 .content{
+    line-height: 30px;
 
 
 }
