@@ -1,6 +1,6 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { AudioService} from '../audio.service';
+import { AudioService } from '../audio.service';
 import { MyAudio } from '../my-audio';
 
 @Component({
@@ -12,13 +12,14 @@ export class AudioListComponent implements OnInit {
   private audios: MyAudio[] = [];
   @Output() audioSelect = new EventEmitter<MyAudio>();
 
-  constructor(private audioService: AudioService) { }
+  constructor(private audioService: AudioService) {
+  }
 
   ngOnInit() {
     this.audios = this.audioService.getAudios();
   }
 
-  onSelected(audio: MyAudio){
+  onSelected(audio: MyAudio) {
     this.audioSelect.emit(audio);
     console.log(audio.title);
   }

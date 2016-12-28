@@ -3,5 +3,6 @@ export class MyAudio {
               public singer: string,
               public img: string,
               public src: string,
-              public lyric?: string ){}
+              public lyric?: string) {
+  }
 }

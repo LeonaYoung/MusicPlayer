@@ -1,8 +1,11 @@
 <h1>Audio List</h1>
 <div class="row">
-  <div class="col-xs-12">
-    <div class="list-group">
-      <bp-audio-item *ngFor="let audio of audios; let i = index" [audio]="audio" [audioId]="i" (click)="onSelected(audio)"></bp-audio-item>
+    <div class="col-xs-12">
+        <div class="list-group">
+            <bp-audio-item *ngFor="let audio of audios; let i = index"
+                           [audio]="audio"
+                           [audioId]="i"
+                           (click)="onSelected(audio)"></bp-audio-item>
+        </div>
     </div>
-  </div>
 </div>

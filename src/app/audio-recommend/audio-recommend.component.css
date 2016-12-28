@@ -1,5 +1,5 @@
-.container{
-    border:2px solid blue;
+.container {
+    border: 2px solid blue;
     height: 600px;
     width: 400px;
     margin-left: 10px;
@@ -9,8 +9,7 @@
     text-align: center;
 }
 
-.content{
+.content {
     line-height: 30px;
-
 
 }

@@ -1,25 +1,25 @@
-div.player{
+div.player {
     width: 400px;
     height: 600px;
     background-color: aquamarine;
 }
 
-div.title{
+div.title {
     text-align: center;
 }
 
-#jasmine_content{
-    text-align: center;  /*水平居中*/
+#jasmine_content {
+    text-align: center; /*水平居中*/
     height: 400px;
     width: 400px;
-    line-height: 400px;  /*图片垂直居中*/
+    line-height: 400px; /*图片垂直居中*/
 }
 
-#cd{
+#cd {
 
 }
 
-#lyr{
+#lyr {
     height: 400px;
     width: 400px;
     overflow: scroll;
@@ -30,7 +30,7 @@ div.title{
     padding-top: 200px;
 }
 
-p:first-line{
+p:first-line {
     font-size: 20px;
     color: #000;
 }

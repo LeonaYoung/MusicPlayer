@@ -32,4 +32,5 @@ import { AudioRecommendComponent } from './audio-recommend/audio-recommend.compo
   providers: [AudioService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
