@@ -10,3 +10,12 @@
 <input type="checkbox" [checked]="true" >
 <hr>
 {{line}}
+<p>error</p>
+<hr>
+<div class="container" id="lyricBox">
+  <div class="content" *ngFor="let lyr of lyric3">
+    <p>{{lyr}}</p>
+  </div>
+</div>
+<button (click)="scrollTo()">click</button>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

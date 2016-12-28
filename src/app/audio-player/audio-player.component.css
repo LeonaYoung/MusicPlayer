@@ -9,7 +9,13 @@ div.title{
 }
 
 #jasmine_content{
+    text-align: center;  /*水平居中*/
+    height: 400px;
+    width: 400px;
+    line-height: 400px;  /*图片垂直居中*/
+}
 
+#cd{
 
 }
 
@@ -19,6 +25,8 @@ div.title{
     overflow: scroll;
     text-align: center;
     line-height: 25px;
+    letter-spacing: 0.4px;
+    padding-bottom: 25px;
 }
 
 p:first-line{
