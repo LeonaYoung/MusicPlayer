@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked, DoCheck } from '@angular/core';
+import { consoleTestResultHandler } from "tslint/lib/test";
 
 let lyric = ["鸳鸯双栖蝶双飞", "满园春色惹人醉", "悄悄问圣僧", "女儿美不美"];
 let lyric1 = [{
@@ -27,7 +28,7 @@ let lyric1 = [{
   templateUrl: './audio-recommend.component.html',
   styleUrls: ['./audio-recommend.component.css']
 })
-export class AudioRecommendComponent implements OnInit, AfterViewInit {
+export class AudioRecommendComponent implements OnInit, AfterViewInit ,AfterViewChecked,AfterContentChecked,DoCheck{
 
   lyric2 = "[00:10.130]马条：我想吻的人不在我身旁\n[00:14.500]我想唱的歌不在我心房\n" +
     "[00:19.070]我想种棵树但没有土壤\n" +
@@ -95,7 +96,114 @@ export class AudioRecommendComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     //setInterval(()=> this.pos = (this.pos+1)%4, 1500);
+    //console.log('afterviewinit');
+
   }
+
+  ngAfterViewChecked(){
+    //console.log('afterviewchecked');
+  }
+
+  ngAfterContentChecked(){
+   // console.log('aftercontentchecked');
+  }
+
+  ngDoCheck(){
+    //console.log('dochecked');
+  }
+
+  trackto(value){
+    var track = document.getElementById('testslider');
+    console.log(value);
+    //track.style.backgroundSize=value/10 + '% 100%';
+    track.style.backgroundSize=value/10+'% 100%';
+    //track.addEventListener("input",(e)=>{
+    //console.log(value);});
+
+  }
+
+  /*********************************
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+
+  slider = document.querySelector(".slider");
+  buffer = document.querySelector(".buffer");
+
+  step = 0.05;
+
+  timer = window.setInterval(function(){
+    let sw = this.slider.offsetWidth;
+    let w = this.buffer.offsetWidth;
+
+    this.buffer.style.width = w + sw*this.step + "px";
+
+    if(w+sw*this.step == sw){
+      window.clearInterval(this.timer);
+    }
+  },100);
+
+
+  processor = document.querySelector(".processor");
+  controller = document.querySelector(".controller");
+
+  dragDropHandler(event){
+    switch (event.type){
+      case "mousedown":{
+        break;
+      }
+      case "mousemove":{
+        break;
+      }
+      case "mouseup":{
+        break;
+      }
+    }
+}
+
+  slider.addEventListener("mousedown",dragDropHandler);
+
+  window.addEnentListener("mousemove",dragDropHandler);
+  window.addEnentListener("mouseup",dragDropHandler);
+
+  tx = event.clientX - slider.offsetWidth;
+  halfW = controller.offsetWidth>>1;
+
+  controller.style.left = this.tx + this.halfW + "px";
+  processer.style.width = this.tx + this.halfW*3 + "px";
+
+
+
+
+
+  var elem = document.querySelector('input[type="range"]');
+  var rangeValue = function(){
+  var newValue = elem.value;
+  var target = document.querySelector('.value');
+  target.innerHTML = newValue;
+};
+  elem.addEventListener("input", rangeValue);
+
+
+
+
+   var elem = document.querySelector('input[type="range"]');
+   var rangeValue = function(){
+      //var newValue = elem.value;
+      var target = document.querySelector('.value');
+      target.innerHTML = elem.nodeValue;
+    };
+   elem.addEventListener("input", rangeValue);
+   console.log('afterviewinit');
+
+   **********************************/
+
+
 
 
 }

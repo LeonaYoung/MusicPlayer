@@ -105,6 +105,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     if (this.isPlay && this.myAudio.duration > 0) {
       this.progress = this.myAudio.currentTime;
       this.completed = Math.round((this.myAudio.currentTime / this.myAudio.duration) * 1000);
+      var track = document.getElementById('mySlider');
+      track.style.backgroundSize=this.completed/10 + '% 100%';
     }
 
     let div1 = document.getElementById('lyr');
