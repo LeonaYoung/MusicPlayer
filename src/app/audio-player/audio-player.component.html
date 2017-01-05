@@ -5,9 +5,15 @@
             {{selectedAudio?.singer}}</p>
     </div>
 
-    <div id="jasmine_content">
+    <div class="content">
         <div (click)="changeLyricOrCd()" [hidden]="lyricOrCd" id="cd">
-            <img [src]="selectedAudio?.img" class="img-circle">
+            <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_needle.png"
+                 class="img-needle"
+                 [@heroState]="state"
+                 >
+            <img [src]="selectedAudio?.img" class="img-circle" id="img-cycle">
+            <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_disc.png"
+                 class="img">
         </div>
         <div (click)="changeLyricOrCd()" [hidden]="!lyricOrCd" id="lyr">
         </div>
@@ -15,7 +21,7 @@
         <!-- <p>{{line}}</p>    -->
     </div>
 
-    <div>
+    <div class="actionbar">
         <div class="row">
             <div class="col-xs-2">
                 <time>{{myAudio.currentTime | audioTime}}</time>
@@ -52,7 +58,8 @@
                 </button>
             </div>
             <div class="col-xs-3">
-                <button type="button" class="btn btn-default" (click)="playOrPause()">
+                <button type="button" class="btn btn-default" (click)="playOrPause()"
+                        (click)="toggleState()">
                     <span class="glyphicon glyphicon-play" aria-hidden="false" *ngIf="!isPlay"></span>
                     <span class="glyphicon glyphicon-pause" aria-hidden="true" *ngIf="isPlay"></span>
                 </button>

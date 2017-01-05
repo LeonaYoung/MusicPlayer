@@ -1,5 +1,9 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked, DoCheck } from '@angular/core';
-import { consoleTestResultHandler } from "tslint/lib/test";
+import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked, DoCheck,Input,
+  trigger,
+  state,
+  style,
+  transition,
+  animate } from '@angular/core';
 
 let lyric = ["鸳鸯双栖蝶双飞", "满园春色惹人醉", "悄悄问圣僧", "女儿美不美"];
 let lyric1 = [{
@@ -26,7 +30,19 @@ let lyric1 = [{
 @Component({
   selector: 'bp-audio-recommend',
   templateUrl: './audio-recommend.component.html',
-  styleUrls: ['./audio-recommend.component.css']
+  styleUrls: ['./audio-recommend.component.css'],
+  animations: [
+    trigger('heroState', [
+      state('inactive', style({
+        transform:'rotate(-30deg)'
+      })),
+      state('active',   style({
+        transform: 'rotate(0deg)'
+      })),
+      transition('inactive => active', animate('400ms ease-in')),
+      transition('active => inactive', animate('400ms ease-out'))
+    ])
+  ]
 })
 export class AudioRecommendComponent implements OnInit, AfterViewInit ,AfterViewChecked,AfterContentChecked,DoCheck{
 
@@ -45,10 +61,32 @@ export class AudioRecommendComponent implements OnInit, AfterViewInit ,AfterView
   constructor() {
   }
 
+  state;
+  toggleState(){
+    this.state = (this.state === 'active' ? 'inactive' : 'active');
+  }
+
+  int;
   ngOnInit() {
     var tt = this.parseLyric(this.lyric2);
 
+    this.int = setInterval(()=>{
+      var image = document.getElementById('img-cycle');
+      image.style.webkitTransform +="rotate(0.5deg)"
+    },56);
+
+
     //console.log(tt);
+  }
+
+  pause(){
+    clearInterval(this.int);
+  }
+  start(){
+    this.int = setInterval(()=>{
+      var image = document.getElementById('img-cycle');
+      image.style.webkitTransform +="rotate(0.5deg)"
+    },56);
   }
 
   scrollTo() {

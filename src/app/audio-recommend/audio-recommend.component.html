@@ -5,10 +5,19 @@
         </div>
     </div>
 </div>
-<img src="http://img1.imgtn.bdimg.com/it/u=1881811150,3126335149&fm=21&gp=0.jpg" alt="" class="img-circle">
-<img src="http://img2.imgtn.bdimg.com/it/u=1985744488,1645890010&fm=21&gp=0.jpg" alt="" class="img-circle">
-<img src="http://p3.music.126.net/q7IHr82DDRcT3K79Z5pHzA==/18542164091404658.jpg" alt="" class="img-circle">
-<input type="checkbox" [checked]="true">
+
+<div class="rotate">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1483628413915&di=90f4f4c5f9283b6951d65e603718e8f7&imgtype=0&src=http%3A%2F%2Fimg01.taopic.com%2F150228%2F240462-15022P9525817.jpg" alt="" class="img-circle" id="img-cycle">
+    <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_disc.png"
+         class="img">
+</div>
+
+<button (click)="pause()">pause</button>
+<button (click)="start()">start</button>
+
+<div>
+    <input type="checkbox" [checked]="true">
+</div>
 <hr>
 {{line}}
 <p>error</p>
@@ -32,6 +41,12 @@
 <hr>
 <input type="range" min="0" max="1000" step="1" value="0" id="testslider" (input)="trackto(input.value)" #input>
 <hr>
+<div class="needle">
+    <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_needle.png"
+         class="img-needle"
+         [@heroState]="state"
+         (click)="toggleState()">
+</div>
 
 <br><br><br><br><br>
 

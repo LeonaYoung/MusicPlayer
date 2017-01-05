@@ -1,4 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy ,  trigger,
+  state,
+  style,
+  transition,
+  animate} from '@angular/core';
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -9,7 +13,19 @@ import { error } from "util";
 @Component({
   selector: 'bp-audio-player',
   templateUrl: './audio-player.component.html',
-  styleUrls: ['./audio-player.component.css']
+  styleUrls: ['./audio-player.component.css'],
+  animations: [
+    trigger('heroState', [
+      state('inactive', style({
+        transform:'rotate(0deg)'
+      })),
+      state('active',   style({
+        transform: 'rotate(-30deg)'
+      })),
+      transition('inactive => active', animate('400ms ease-in')),
+      transition('active => inactive', animate('400ms ease-out'))
+    ])
+  ]
 })
 export class AudioPlayerComponent implements OnInit,OnDestroy {
   selectedAudio: MyAudio;
@@ -43,6 +59,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       }
     );
     this.getLyrics();
+
   }
 
 
@@ -216,12 +233,23 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     this.myAudio.currentTime = Math.round((this.myAudio.duration * inputValue) / 1000);
   }
 
+  int;
   playOrPause() {
     if (this.myAudio.paused) {
       this.myAudio.play();
+      this.int = setInterval(()=>{
+        var image = document.getElementById('img-cycle');
+        image.style.webkitTransform +="rotate(0.5deg)"
+      },56);
     } else {
       this.myAudio.pause();
+      clearInterval(this.int);
     }
+  }
+
+  state;
+  toggleState(){
+    this.state = (this.state === 'active' ? 'inactive' : 'active');
   }
 
   isCycle = true;
@@ -248,6 +276,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
   playForward() {
     this.myAudio.pause();
+    clearInterval(this.int);
     if (this.audioId == (this.audiosLength - 1)) {
       this.audioId = 0;
       this.router.navigate(['/list', this.audioId]);
@@ -259,6 +288,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
   playBackward() {
     this.myAudio.pause();
+    clearInterval(this.int);
     if (this.audioId == 0) {
       this.audioId = this.audiosLength - 1;
       this.router.navigate(['/list', this.audioId]);
