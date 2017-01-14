@@ -2,7 +2,6 @@
     width: 400px;
     height: 600px;
     background-color: aquamarine;
-
 }
 
 .title {
@@ -21,22 +20,50 @@
 
 .actionbar{
     height: 100px;
+}
+
+#slider1{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index:1;
+    display: block;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 2px;
+    margin: 0 auto;
+    outline: 0;
+    background-color: gainsboro;
+}
+
+#mySlider{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index:2;
+}
+
+#range{
+    position: relative;
+}
+
+#range1{
 
 }
 
 
 input[type="range"] {
+
     display: block;
     -webkit-appearance: none;
-    background-color: cornsilk;
     width: 100%;
-    height: 10px;
+    height: 5px;
     border-radius: 2px;
     margin: 0 auto;
     outline: 0;
     background: -webkit-linear-gradient(#059CFA, #059CFA) no-repeat;
     background-size: 0% 100%;
-    border: 1px solid black;
 }
 input[type="range"]:before{
     content: '';

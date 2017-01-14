@@ -1,8 +1,4 @@
-import { Component, OnInit, OnDestroy ,  trigger,
-  state,
-  style,
-  transition,
-  animate} from '@angular/core';
+import { Component, OnInit, OnDestroy ,  trigger, state, style, transition, animate} from '@angular/core';
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -121,7 +117,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   onTimeUpdate(e) {
     if (this.isPlay && this.myAudio.duration > 0) {
       this.progress = this.myAudio.currentTime;
-      this.completed = Math.round((this.myAudio.currentTime / this.myAudio.duration) * 1000);
+      this.completed = Math.floor((this.myAudio.currentTime / this.myAudio.duration) * 1000);
       var track = document.getElementById('mySlider');
       track.style.backgroundSize=this.completed/10 + '% 100%';
     }
@@ -141,8 +137,9 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
           if (this.lyricTime[k] <= this.myAudio.currentTime && this.myAudio.currentTime < this.lyricTime[k + 1]) {
             this.scrollh = k * 25;
             div1.innerHTML += "<font color=red  style=font-weight:bold>" + this.lyricText[k] + "</font><br>";
-          } else if (this.myAudio.currentTime < this.lyricTime[this.lyricTime.length - 1])
+          } else{
             div1.innerHTML += this.lyricText[k] + "<br>";
+          }
         }
       }
     }
@@ -152,7 +149,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       div1.innerHTML += "<font  color=red  style=font-weight:bold>" + this.lyricText[this.lyricText.length - 1] + "</font><br>";
     }
 
-    if (Math.round(this.myAudio.currentTime) == this.lyricTime[this.scrollh / 25]) {
+    if (Math.floor(this.myAudio.currentTime) == this.lyricTime[this.scrollh / 25]) {
       document.getElementById("lyr").scrollTop = this.scrollh;
     }
   }
@@ -230,7 +227,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   }
 
   changeRange(inputValue: number) {
-    this.myAudio.currentTime = Math.round((this.myAudio.duration * inputValue) / 1000);
+    this.myAudio.currentTime = Math.floor((this.myAudio.duration * inputValue) / 1000);
   }
 
   int;
