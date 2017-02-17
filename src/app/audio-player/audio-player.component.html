@@ -8,12 +8,11 @@
     <div class="content">
         <div (click)="changeLyricOrCd()" [hidden]="lyricOrCd" id="cd">
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_needle.png"
-                 class="img-needle"
-                 [@audioState]="state"
-                 >
+                 id="img-needle"
+                 [@audioState]="state">
             <img [src]="selectedAudio?.img" class="img-circle" id="img-cycle">
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_disc.png"
-                 class="img">
+                 id="img-dish">
         </div>
         <div (click)="changeLyricOrCd()" [hidden]="!lyricOrCd" id="lyr">
         </div>
