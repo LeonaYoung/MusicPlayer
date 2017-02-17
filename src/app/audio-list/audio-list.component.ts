@@ -23,5 +23,4 @@ export class AudioListComponent implements OnInit {
     this.audioSelect.emit(audio);
     console.log(audio.title);
   }
-
 }
