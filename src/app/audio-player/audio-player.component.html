@@ -9,7 +9,7 @@
         <div (click)="changeLyricOrCd()" [hidden]="lyricOrCd" id="cd">
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_needle.png"
                  class="img-needle"
-                 [@heroState]="state"
+                 [@audioState]="state"
                  >
             <img [src]="selectedAudio?.img" class="img-circle" id="img-cycle">
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_disc.png"
@@ -28,8 +28,8 @@
             </div>
             <div class="col-xs-8">
                 <div id="range">
-                    <div id="slider1"></div>
-                    <input id="mySlider"
+                    <div id="slider-down"></div>  <!--两层slider，这是底层slider-->
+                    <input id="slider-up"
                            name="range"
                            type="range"
                            min="0"
@@ -60,8 +60,7 @@
                 </button>
             </div>
             <div class="col-xs-3">
-                <button type="button" class="btn btn-default" (click)="playOrPause()"
-                        (click)="toggleState()">
+                <button type="button" class="btn btn-default" (click)="playOrPause()" >
                     <span class="glyphicon glyphicon-play" aria-hidden="false" *ngIf="!isPlay"></span>
                     <span class="glyphicon glyphicon-pause" aria-hidden="true" *ngIf="isPlay"></span>
                 </button>

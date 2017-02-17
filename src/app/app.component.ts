@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MyAudio } from "./my-audio";
 
 @Component({
   selector: 'bp-root',
@@ -7,7 +6,6 @@ import { MyAudio } from "./my-audio";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  audioSelected: MyAudio;
 
   ngOnInit() {
   }

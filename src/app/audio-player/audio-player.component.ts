@@ -11,18 +11,19 @@ import { error } from "util";
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.css'],
   animations: [
-    trigger('heroState', [
-      state('inactive', style({
+    trigger('audioState', [
+      state('play', style({
         transform:'rotate(0deg)'
       })),
-      state('active',   style({
+      state('pause',   style({
         transform: 'rotate(-30deg)'
       })),
-      transition('inactive => active', animate('400ms ease-in')),
-      transition('active => inactive', animate('400ms ease-out'))
+      transition('play => pause', animate('400ms ease-in')),
+      transition('pause => play', animate('400ms ease-out'))
     ])
   ]
 })
+
 export class AudioPlayerComponent implements OnInit,OnDestroy {
   selectedAudio: MyAudio;
   audioId: number;
@@ -118,7 +119,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     if (this.isPlay && this.myAudio.duration > 0) {
       this.progress = this.myAudio.currentTime;
       this.completed = Math.floor((this.myAudio.currentTime / this.myAudio.duration) * 1000);
-      var track = document.getElementById('mySlider');
+      var track = document.getElementById('slider-up');
       track.style.backgroundSize=this.completed/10 + '% 100%';
     }
 
@@ -234,16 +235,19 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   playOrPause() {
     if (this.myAudio.paused) {
       this.myAudio.play();
+      this.state = 'play';  //唱片机动画应处于播放状态
       this.int = setInterval(()=>{
         var image = document.getElementById('img-cycle');
         image.style.webkitTransform +="rotate(0.5deg)"
       },56);
     } else {
       this.myAudio.pause();
+      this.state = 'pause';   //唱片机动画应处于暂停状态
       clearInterval(this.int);
     }
   }
 
+  //动画转场
   state;
   toggleState(){
     this.state = (this.state === 'active' ? 'inactive' : 'active');
@@ -296,6 +300,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   }
 
   playNext() {
+    clearInterval(this.int);
     if (this.isCycle) {
       if (this.audioId == (this.audiosLength - 1)) {
         this.router.navigate(['/list', 0]);

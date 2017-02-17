@@ -1,7 +1,7 @@
 .player {
     width: 400px;
     height: 600px;
-    background-color: aquamarine;
+    background-color: #787878;
 }
 
 .title {
@@ -22,7 +22,7 @@
     height: 100px;
 }
 
-#slider1{
+#slider-down{
     position: absolute;
     left: 10px;
     top: 10px;
@@ -30,14 +30,14 @@
     display: block;
     -webkit-appearance: none;
     width: 100%;
-    height: 5px;
-    border-radius: 2px;
+    height: 2.5px;
+    border-radius: 1.25px;
     margin: 0 auto;
     outline: 0;
     background-color: gainsboro;
 }
 
-#mySlider{
+#slider-up{
     position: absolute;
     left: 10px;
     top: 10px;
@@ -48,45 +48,39 @@
     position: relative;
 }
 
-#range1{
-
-}
-
-
 input[type="range"] {
-
     display: block;
     -webkit-appearance: none;
     width: 100%;
-    height: 5px;
-    border-radius: 2px;
+    height: 2.5px;
+    border-radius: 1.25px;
     margin: 0 auto;
     outline: 0;
-    background: -webkit-linear-gradient(#059CFA, #059CFA) no-repeat;
+    background: -webkit-linear-gradient(#CD3333, #CD3333) no-repeat;
     background-size: 0% 100%;
 }
+
+/****
 input[type="range"]:before{
     content: '';
     width: 10px;
     height: 3px;
     background-color: blue;
 }
+*/
 
 input[type="range"]::-webkit-slider-thumb {
     position: relative;
     -webkit-appearance: none;
-    background-color: #c70c0c;
-    width: 20px;
-    height: 20px;
+    background-color: #CD3333;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 5px solid white;
     cursor: pointer;
     transition: 0.3s ease-in-out;
-    -webkit-box-shadow: 0 1px 1px black inset;
+    /*-webkit-box-shadow: 0 1px 1px black inset;*/
 }
-
-
-
 
 .row {
     margin: 10px;
