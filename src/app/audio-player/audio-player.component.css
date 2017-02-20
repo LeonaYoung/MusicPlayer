@@ -1,6 +1,6 @@
 .player {
     width: auto;
-    height: 100vh;
+    height: 100vh;   /*使播放页面高度沾满一屏*/
     background-color: #787878;
     margin:0;
     padding: 0;
@@ -10,20 +10,18 @@
     height: 10%;
     text-align: center;
     border-bottom: 1px solid black;
-    z-index:4;
 }
 
 .content {
     text-align: center; /*水平居中*/
     height: 74%;
     width: 100%;
-    line-height: 400px; /*图片垂直居中*/
+    /*line-height: 400px; 图片垂直居中，使内容高度与行高一致*/
     position: relative;
 }
 
 .sliderbar{
     height: 6%;
-
 }
 
 .actionbar{
@@ -33,23 +31,23 @@
 
 #slider-down{
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: -1px;
+    top: 9px;
     z-index:1;
     display: block;
     -webkit-appearance: none;
-    width: auto;
+    width: 250px; /*该值不能设为auto，否则看不到背景色*/
     height: 2.5px;
     border-radius: 1.25px;
     margin: 0 auto;
     outline: 0;
-    background-color: blue;
+    background-color: gainsboro;
 }
 
 #slider-up{
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: -1px;
+    top: 9px;
     z-index:2;
 }
 
@@ -71,14 +69,14 @@ input[type="range"] {
     background: -webkit-linear-gradient(#CD3333, #CD3333) no-repeat;
     background-size: 0% 100%;
 }
-
+/*
 input[type="range"]:before{
     content: '';
     width: 10px;
     height: 3px;
     background-color: blue;
 }
-
+*/
 
 input[type="range"]::-webkit-slider-thumb {
     position: relative;
@@ -99,6 +97,7 @@ input[type="range"]::-webkit-slider-thumb {
     margin: 0px;
 }
 
+/*时间戳*/
 .col-xs-2 {
     text-align:center;
     padding-left: 10px;
@@ -106,21 +105,21 @@ input[type="range"]::-webkit-slider-thumb {
     margin: 0;
 }
 
+/**/
 #time-left{
     position: absolute;
     left:0;
+    width:60px;
 }
 
+/**/
 #time-right{
     position: absolute;
     left:312.5px;
+    width: 60px;
 }
 
-.col-xs-3{
-    padding: 0;
-    margin: 0;
-}
-
+/*sliderbar*/
 .col-xs-8{
     padding: 0;
     margin: 0;
@@ -128,8 +127,20 @@ input[type="range"]::-webkit-slider-thumb {
     left:62.5px;
 }
 
+/*底部按钮*/
+.col-xs-3{
+    text-align:center;
+    padding: 0;
+    margin: 0;
+    width:93.75px;
+}
+
+.col-xs-3 button{
+    background-color: #787878;   /*让button的背景色和整个页面的背景色保持一致*/
+}
+
 #lyr {
-    height: auto;
+    height: 74%;   /*不能设置为auto*/
     width: 100%;
     overflow: scroll;
     text-align: center;
@@ -165,8 +176,7 @@ p:first-line {
     position: absolute;
     z-index:3;
     top: -16px;
-    left: 180px;
+    left: 172px;
     width: 100px;
     -webkit-transform-origin:14px 14px;
 }
-

@@ -178,9 +178,10 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
         let t = timeRegExpArr[k];
         let min = Number(String(t.match(/\[\d*/i)).slice(1));
         let sec = Number(String(t.match(/\:\d*/i)).slice(1));
-        var time = min * 60 + sec;
+        let time = min * 60 + sec;
+        this.lyricTime[i] = time;
       }
-      this.lyricTime[i] = time;
+      //this.lyricTime[i] = time;
     }
 
     //去除歌词数组中为空的对象，以及时间戳数组中对应的对象
