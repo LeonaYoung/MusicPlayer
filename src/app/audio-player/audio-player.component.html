@@ -10,7 +10,7 @@
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_needle.png"
                  id="img-needle"
                  [@audioState]="state">
-            <img [src]="selectedAudio?.img" class="img-circle" id="img-cycle">
+            <img [src]="selectedAudio?.img" id="img-cycle">
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_disc.png"
                  id="img-dish">
         </div>
@@ -20,9 +20,9 @@
         <!-- <p>{{line}}</p>    -->
     </div>
 
-    <div class="actionbar">
+    <div class="sliderbar">
         <div class="row">
-            <div class="col-xs-2">
+            <div class="col-xs-2" id="time-left">
                 <time>{{myAudio.currentTime | audioTime}}</time>
             </div>
             <div class="col-xs-8">
@@ -37,14 +37,15 @@
                            [(ngModel)]="completed"
                            (input)="changeRange(input.value)"
                            #input>
-
                 </div>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-2" id="time-right">
                 <time>{{myAudio.duration | audioTime}}</time>
             </div>
         </div>
+    </div>
 
+    <div class="actionbar">
         <div class="row">
             <div class="col-xs-3">
                 <button type="button" class="btn btn-default" (click)="playModeSelect()">
