@@ -161,6 +161,7 @@ p:first-line {
     top:114px;   /*130-16*/
     left:97.5px;
     width: 180px;
+    height: 180px;
     border-radius:50%;
 }
 

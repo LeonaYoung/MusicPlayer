@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Song } from './audio';
 import { AudioList } from './audio.list';
+import {Lyrc} from './lyrc';
 import { encode } from "punycode";
 
 @Injectable()
@@ -15,7 +16,8 @@ export class AudioService {
 
   private baseUrl = 'http://api.tlbhajxc.com';
   private songUrl = this.baseUrl + '/songs/';
-  private playListUrl = (this.baseUrl + '/search/2017');
+  private playListUrl = (this.baseUrl + '/search/ni');
+  private songLyric = this.baseUrl + '/lyrc/';
 
   constructor(private http: Http) {
   }
@@ -32,6 +34,9 @@ export class AudioService {
       .catch((error: any) => Observable.throw(error.json().error || 'getPlayList error'));
   }
 
-  getLyricBySongId(songId: number) {
+  getLyricBySongId(songId: number):Observable<Lyrc> {
+    return this.http.get(this.songLyric + songId)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'getSongById error'));
   }
 }

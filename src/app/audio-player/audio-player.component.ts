@@ -8,7 +8,9 @@ import { error } from "util";
 
 import { AudioList,Result } from '../audio.list';
 import { Song } from '../audio';
+import {Lyrc} from '../lyrc';
 import { Songs } from "../audio.list";
+import { async } from "rxjs/scheduler/async";
 
 @Component({
   selector: 'bp-audio-player',
@@ -36,15 +38,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   private subscription: Subscription;
   private audioList: AudioList;
 
-  lyric = "[00:10.130]马条：我想吻的人不在我身旁\n[00:14.500]我想唱的歌不在我心房\n" +
-    "[00:19.070]我想种棵树但没有土壤\n" +
-    "[00:23.600]我想把骨头包起来献给海洋\n" +
-    "[00:27.790]\n" +
-    "[00:28.330]艾尔肯：我想走的路不怎么顺畅\n" +
-    "[00:32.680]我想读的书都有钢铁的重量\n" +
-    "[00:37.230]我想打开的门都已经关上\n[00:41.820]我想冷不丁的划破肃穆的思想\n[00:45.700]\n[00:46.500]合：我想 我想 在夏天穿上冬装\n[00:50.890]我想 我想 听清鸟儿的展望\n[00:55.440]我想 我想 分辨集体的份量\n[01:00.030]突然间 裸露在一个神圣的广场\n[01:04.690]\n[01:23.050]洪启：我想吻的人不在我身旁\n[01:27.350]我想唱的歌不在我心房\n[01:31.820]我想种棵树但没有土壤\n[01:36.380]我想把骨头包起来献给海洋\n[01:40.530]\n[01:40.830]张楚：我想走的路不怎么顺畅\n[01:45.670]我想读的书都有钢铁的重量\n[01:50.000]我想打开的门都已经关上\n[01:54.560]我想冷不丁的划破肃穆的思想\n[01:59.010]\n[01:59.260]合：我想 我想 在夏天穿上冬装\n[02:03.670]我想 我想 听清鸟儿的展望\n[02:08.210]我想 我想 分辨集体的份量\n[02:12.890]突然间 裸露在一个神圣的广场\n[02:17.830]\n[02:36.230]杨嘉松：我想吻的人不在我身旁\n[02:40.900]我想唱的歌不在我心房\n[02:45.340]我想种棵树但没有土壤\n[02:49.850]我想把骨头包起献给海洋\n[02:54.190]\n[02:54.440]钟立风：我想走的路不怎么顺畅\n[02:59.000]我想读的书都有钢铁的重量\n[03:03.540]我想打开的门都已经关上\n[03:08.110]我想冷不丁的划破肃穆的思想\n[03:12.240]\n[03:12.440]合：我想 我想 在夏天穿上冬装\n[03:17.250]我想 我想 听清鸟儿的展望\n[03:21.740]我想 我想 分辨集体的份量\n[03:26.430]突然间 裸露在一个神圣的广场\n[03:31.440]合：我想 我想 在夏天穿上冬装\n[03:35.680]我想 我想 听清鸟儿的展望\n" +
-    "[03:40.140]我想 我想 分辨集体的份量\n" +
-    "[03:44.690]突然间 裸露在一个神圣的广场\n";
+  lyric:string;
 
   constructor(private audioService: AudioService,
               private route: ActivatedRoute,
@@ -55,37 +49,35 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         this.audioIndex = params['id'];
-
-
-
         this.audioService
           .getPlayList()
           .subscribe((songs: AudioList) => {
             this.audioList = songs;
             this.audiosLength = this.audioList.result.songs.length;
+
             this.audioService
               .getSongById(this.audioList.result.songs[this.audioIndex].id)
               .subscribe((audio: Song) => {
                 this.selectedAudio = audio;
                 this.audioUrl = this.selectedAudio.songs[0].mp3Url;
-                console.log(audio);
+                this.myAudio.src = this.audioUrl;
+              });
+
+            this.audioService
+              .getLyricBySongId(this.audioList.result.songs[this.audioIndex].id)
+              .subscribe((lyric1: Lyrc) => {
+                this.lyric = lyric1.lrc.lyric;
+                this.lyricText = this.lyric.split("\n");
+                this.getLyrics();
+                console.log('lyric'+this.lyric);
               });
           });
-
-
-
-
-
-
-
         this.createAudio();
-        this.playOrPause();
       }
     );
     this.getLyrics();
 
   }
-
 
   private myAudio: HTMLAudioElement;
   public isPlay = false;
@@ -100,7 +92,9 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
   createAudio() {
     this.myAudio = new Audio();
-    this.myAudio.src = this.audioUrl;
+    // this.myAudio.src = this.audioUrl;
+
+    console.log('playnow'+ this.myAudio.src);
 
     this.myAudio.addEventListener("timeupdate", (e) => {
       this.onTimeUpdate(e);
@@ -138,6 +132,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       //console.log(e);
       //console.log(this.myAudio.networkState);
     }, false);
+
+    this.playOrPause();
   }
 
   private scrollh = 0;
@@ -155,7 +151,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
     if (this.myAudio.currentTime < this.lyricTime[this.lyricTime.length - 1]) {
       if (this.myAudio.currentTime < this.lyricTime[1]) {
-        div1.innerHTML += "<font color=red  style=font-weight:bold>" + this.lyricText[0] + "</font><br>";
+        div1.innerHTML += "<font color=gainsboro  style=font-weight:bold>" + this.lyricText[0] + "</font><br>";
         for (let i = 1; i < this.lyricText.length; i++) {
           div1.innerHTML += this.lyricText[i] + "<br>";
         }
@@ -164,7 +160,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
         for (let k = 0; k < this.lyricTime.length; k++) {
           if (this.lyricTime[k] <= this.myAudio.currentTime && this.myAudio.currentTime < this.lyricTime[k + 1]) {
             this.scrollh = k * 25;
-            div1.innerHTML += "<font color=red  style=font-weight:bold>" + this.lyricText[k] + "</font><br>";
+            div1.innerHTML += "<font color=gainsboro  style=font-weight:bold>" + this.lyricText[k] + "</font><br>";
           } else{
             div1.innerHTML += this.lyricText[k] + "<br>";
           }
@@ -184,7 +180,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
   getLyrics() {
     //将歌词字符串拆分成数组
-    this.lyricText = this.lyric.split("\n");
+    //this.lyricText = this.lyric.split("\n");
 
     //去除数组中为空的字符串
     for (let i = 0; i < this.lyricText.length; i++) {
