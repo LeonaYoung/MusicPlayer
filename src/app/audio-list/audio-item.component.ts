@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MyAudio } from "../my-audio";
+import { Songs } from "../audio.list";
 
 @Component({
   selector: 'bp-audio-item',
@@ -7,7 +7,7 @@ import { MyAudio } from "../my-audio";
   styleUrls: ['./audio-item.component.css']
 })
 export class AudioItemComponent implements OnInit {
-  @Input() audio: MyAudio;
+  @Input() audio: Songs;
   @Input() audioId: number;
 
   constructor() {

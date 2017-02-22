@@ -6,6 +6,10 @@ import { AudioService }  from '../audio.service';
 import { MyAudio } from "../my-audio";
 import { error } from "util";
 
+import { AudioList,Result } from '../audio.list';
+import { Song } from '../audio';
+import { Songs } from "../audio.list";
+
 @Component({
   selector: 'bp-audio-player',
   templateUrl: './audio-player.component.html',
@@ -25,10 +29,12 @@ import { error } from "util";
 })
 
 export class AudioPlayerComponent implements OnInit,OnDestroy {
-  selectedAudio: MyAudio;
-  audioId: number;
+  selectedAudio: Song;
+  audioUrl: string;
+  audioIndex: number;
   audiosLength: number;
   private subscription: Subscription;
+  private audioList: AudioList;
 
   lyric = "[00:10.130]马条：我想吻的人不在我身旁\n[00:14.500]我想唱的歌不在我心房\n" +
     "[00:19.070]我想种棵树但没有土壤\n" +
@@ -48,9 +54,30 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.subscription = this.route.params.subscribe(
       (params: any) => {
-        this.audioId = params['id'];
-        this.selectedAudio = this.audioService.getAudio(this.audioId);
-        this.audiosLength = this.audioService.getAudioLength();
+        this.audioIndex = params['id'];
+
+
+
+        this.audioService
+          .getPlayList()
+          .subscribe((songs: AudioList) => {
+            this.audioList = songs;
+            this.audiosLength = this.audioList.result.songs.length;
+            this.audioService
+              .getSongById(this.audioList.result.songs[this.audioIndex].id)
+              .subscribe((audio: Song) => {
+                this.selectedAudio = audio;
+                this.audioUrl = this.selectedAudio.songs[0].mp3Url;
+                console.log(audio);
+              });
+          });
+
+
+
+
+
+
+
         this.createAudio();
         this.playOrPause();
       }
@@ -73,7 +100,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
   createAudio() {
     this.myAudio = new Audio();
-    this.myAudio.src = this.selectedAudio.src;
+    this.myAudio.src = this.audioUrl;
 
     this.myAudio.addEventListener("timeupdate", (e) => {
       this.onTimeUpdate(e);
@@ -279,35 +306,35 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   playForward() {
     this.myAudio.pause();
     clearInterval(this.int);
-    if (this.audioId == (this.audiosLength - 1)) {
-      this.audioId = 0;
-      this.router.navigate(['/list', this.audioId]);
+    if (this.audioIndex == (this.audiosLength - 1)) {
+      this.audioIndex = 0;
+      this.router.navigate(['/list', this.audioIndex]);
     } else {
-      this.audioId = ++this.audioId;
-      this.router.navigate(['/list', this.audioId]);
+      this.audioIndex = ++this.audioIndex;
+      this.router.navigate(['/list', this.audioIndex]);
     }
   }
 
   playBackward() {
     this.myAudio.pause();
     clearInterval(this.int);
-    if (this.audioId == 0) {
-      this.audioId = this.audiosLength - 1;
-      this.router.navigate(['/list', this.audioId]);
+    if (this.audioIndex == 0) {
+      this.audioIndex = this.audiosLength - 1;
+      this.router.navigate(['/list', this.audioIndex]);
     } else {
-      this.audioId = --this.audioId;
-      this.router.navigate(['/list', this.audioId]);
+      this.audioIndex = --this.audioIndex;
+      this.router.navigate(['/list', this.audioIndex]);
     }
   }
 
   playNext() {
     clearInterval(this.int);
     if (this.isCycle) {
-      if (this.audioId == (this.audiosLength - 1)) {
+      if (this.audioIndex == (this.audiosLength - 1)) {
         this.router.navigate(['/list', 0]);
       } else {
-        this.audioId = ++this.audioId;
-        this.router.navigate(['/list', this.audioId]);
+        this.audioIndex = ++this.audioIndex;
+        this.router.navigate(['/list', this.audioIndex]);
       }
     }
     else if (this.isSingle) {
@@ -316,20 +343,20 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     else if (this.isRandom) {
       let max = this.audiosLength - 1;
       let randomId = Math.floor(Math.random() * (max + 1));
-      if (this.audioId == randomId) {
+      if (this.audioIndex == randomId) {
         if (randomId == max) {
-          this.audioId = 0;
-          this.router.navigate(['/list', this.audioId]);
+          this.audioIndex = 0;
+          this.router.navigate(['/list', this.audioIndex]);
         } else {
-          this.audioId = randomId + 1;
-          this.router.navigate(['/list', this.audioId]);
+          this.audioIndex = randomId + 1;
+          this.router.navigate(['/list', this.audioIndex]);
         }
       }
       else {
-        this.audioId = randomId;
-        this.router.navigate(['/list', this.audioId]);
+        this.audioIndex = randomId;
+        this.router.navigate(['/list', this.audioIndex]);
       }
-      console.log(randomId, this.audioId);
+      console.log(randomId, this.audioIndex);
     }
   }
 

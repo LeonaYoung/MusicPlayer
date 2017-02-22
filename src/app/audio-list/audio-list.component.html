@@ -2,10 +2,9 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="list-group">
-            <bp-audio-item *ngFor="let audio of audios; let i = index"
+            <bp-audio-item *ngFor="let audio of audioList?.result.songs; let i = index"
                            [audio]="audio"
-                           [audioId]="i"
-                           (click)="onSelected(audio)"></bp-audio-item>
+                           [audioId]="i"></bp-audio-item>
         </div>
     </div>
 </div>

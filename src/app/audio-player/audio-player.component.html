@@ -1,8 +1,8 @@
 <div class="player">
 
     <div class="title">
-        <p>{{selectedAudio?.title}}<br>
-            {{selectedAudio?.singer}}</p>
+        <p>{{selectedAudio?.songs[0].name}}<br>
+            {{selectedAudio?.songs[0].artists[0].name}}</p>
     </div>
 
     <div class="content">
@@ -10,7 +10,7 @@
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_needle.png"
                  id="img-needle"
                  [@audioState]="state">
-            <img [src]="selectedAudio?.img" id="img-cycle">
+            <img [src]="selectedAudio?.songs[0].album.blurPicUrl" id="img-cycle">
             <img src="https://raw.githubusercontent.com/goo4it/MediaPlayer/master/app/src/main/res/drawable-xxhdpi/play_disc.png"
                  id="img-dish">
         </div>
