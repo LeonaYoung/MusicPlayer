@@ -9,8 +9,6 @@ import { error } from "util";
 import { AudioList,Result } from '../audio.list';
 import { Song } from '../audio';
 import {Lyrc} from '../lyrc';
-import { Songs } from "../audio.list";
-import { async } from "rxjs/scheduler/async";
 
 @Component({
   selector: 'bp-audio-player',
@@ -69,7 +67,6 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
                 this.lyric = lyric1.lrc.lyric;
                 this.lyricText = this.lyric.split("\n");
                 this.getLyrics();
-                console.log('lyric'+this.lyric);
               });
           });
         this.createAudio();
@@ -94,7 +91,6 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     this.myAudio = new Audio();
     // this.myAudio.src = this.audioUrl;
 
-    console.log('playnow'+ this.myAudio.src);
 
     this.myAudio.addEventListener("timeupdate", (e) => {
       this.onTimeUpdate(e);
