@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy ,  trigger, state, style, transition, anim
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 
+
 import { AudioService }  from '../audio.service';
 import { MyAudio } from "../my-audio";
 import { error } from "util";
@@ -43,7 +44,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
               private router: Router) {
   }
 
-  ngOnInit() {
+  ngOnInit(){
+
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         this.audioIndex = params['id'];
@@ -64,17 +66,48 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
             this.audioService
               .getLyricBySongId(this.audioList.result.songs[this.audioIndex].id)
               .subscribe((lyric1: Lyrc) => {
-                this.lyric = lyric1.lrc.lyric;
+                this.lyric = lyric1.lrc.lyric;/*需要加一个歌词为空值的判断*/
                 this.lyricText = this.lyric.split("\n");
                 this.getLyrics();
               });
           });
         this.createAudio();
-      }
-    );
+      });
     this.getLyrics();
-
   }
+
+/******
+    this.audioService
+      .getPlayList()
+      .subscribe((songs: AudioList) => {
+        this.audioList = songs;
+        this.audiosLength = this.audioList.result.songs.length;
+      });
+
+
+        this.route.params
+          .switchMap((params: any) => {
+            this.audioIndex = params['id'];
+          this.audioService.getLyricBySongId(this.audioIndex).
+          subscribe((lyric1: Lyrc) => {
+            this.lyric = lyric1.lrc.lyric;
+            this.lyricText = this.lyric.split("\n");
+            this.getLyrics();
+          });
+            this.audioService.getSongById(this.audioIndex)
+              .subscribe((audio: Song) => {
+                this.selectedAudio = audio;
+                this.audioUrl = this.selectedAudio.songs[0].mp3Url;
+                this.myAudio.src = this.audioUrl;
+              });
+
+        this.createAudio();
+        return {};
+
+    });
+*******/
+
+
 
   private myAudio: HTMLAudioElement;
   public isPlay = false;
@@ -166,7 +199,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
     else {
       for (let j = 0; j < this.lyricText.length - 1; j++)
         div1.innerHTML += this.lyricText[j] + "<br>";
-      div1.innerHTML += "<font  color=red  style=font-weight:bold>" + this.lyricText[this.lyricText.length - 1] + "</font><br>";
+      div1.innerHTML += "<font  color=gainsboro  style=font-weight:bold>" + this.lyricText[this.lyricText.length - 1] + "</font><br>";
     }
 
     if (Math.floor(this.myAudio.currentTime) == this.lyricTime[this.scrollh / 25]) {

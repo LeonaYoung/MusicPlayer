@@ -49,6 +49,7 @@
     left: -1px;
     top: 9px;
     z-index:2;
+    width: 250px;
 }
 
 #range{
@@ -69,14 +70,7 @@ input[type="range"] {
     background: -webkit-linear-gradient(#CD3333, #CD3333) no-repeat;
     background-size: 0% 100%;
 }
-/*
-input[type="range"]:before{
-    content: '';
-    width: 10px;
-    height: 3px;
-    background-color: blue;
-}
-*/
+
 
 input[type="range"]::-webkit-slider-thumb {
     position: relative;
@@ -87,7 +81,7 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%;
     border: 5px solid white;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
+    transition: 0.1s ease-in-out;
     /*-webkit-box-shadow: 0 1px 1px black inset;*/
 }
 
@@ -144,10 +138,12 @@ input[type="range"]::-webkit-slider-thumb {
     width: 100%;
     overflow: scroll;
     text-align: center;
-    line-height: 25px;
+    line-height: 30px;
     letter-spacing: 0.4px;
     padding-bottom: 200px;
     padding-top: 200px;
+    width: 370px;
+    font-size: 18px;
 }
 
 p:first-line {
@@ -155,10 +151,19 @@ p:first-line {
     color: #000;
 }
 
+/*待解决问题：cycle和dish水平方向随屏幕宽度居中
+{
+    position: relative;
+    margin-left: 50%;  //浮动元素左边正好位于文档中间
+    left: -135px;  //左移宽度的二分之一，dish的宽度为270
+}
+实际并没有居中，why？
+*/
+
 #img-cycle{
     position:absolute;
-    z-index:1;
-    top:114px;   /*130-16*/
+    z-index:2;
+    top:130px;
     left:97.5px;
     width: 180px;
     height: 180px;
@@ -167,8 +172,8 @@ p:first-line {
 
 #img-dish{
     position:absolute;
-    z-index:2;
-    top:69px;   /*85-16*/
+    z-index:1;
+    top:85px;
     left:52.5px;
     width: 270px;
 }
@@ -176,7 +181,7 @@ p:first-line {
 #img-needle{
     position: absolute;
     z-index:3;
-    top: -16px;
+    top: 0px;
     left: 172px;
     width: 100px;
     -webkit-transform-origin:14px 14px;
