@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy ,  trigger, state, style, transition, animate} from '@angular/core';
 import { Subscription } from "rxjs";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router,Params } from "@angular/router";
 
+import 'rxjs/add/operator/switchMap';
 
 import { AudioService }  from '../audio.service';
-import { MyAudio } from "../my-audio";
 import { error } from "util";
 
-import { AudioList,Result } from '../audio.list';
+import { AudioList } from '../audio.list';
 import { Song } from '../audio';
 import {Lyrc} from '../lyrc';
 
@@ -66,46 +66,21 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
             this.audioService
               .getLyricBySongId(this.audioList.result.songs[this.audioIndex].id)
               .subscribe((lyric1: Lyrc) => {
-                this.lyric = lyric1.lrc.lyric;/*需要加一个歌词为空值的判断*/
-                this.lyricText = this.lyric.split("\n");
-                this.getLyrics();
+                  if(lyric1.hasOwnProperty('lrc')){
+                    this.lyric = lyric1.lrc.lyric;  //有些歌的歌词数据没有lrc 字段
+                    this.lyricText = this.lyric.split("\n");
+                    this.getLyrics();
+                  }else {
+                    console.log('meiyouzhaodaogeci');
+                  }
               });
           });
         this.createAudio();
       });
-    this.getLyrics();
+    //this.getLyrics();
   }
 
-/******
-    this.audioService
-      .getPlayList()
-      .subscribe((songs: AudioList) => {
-        this.audioList = songs;
-        this.audiosLength = this.audioList.result.songs.length;
-      });
 
-
-        this.route.params
-          .switchMap((params: any) => {
-            this.audioIndex = params['id'];
-          this.audioService.getLyricBySongId(this.audioIndex).
-          subscribe((lyric1: Lyrc) => {
-            this.lyric = lyric1.lrc.lyric;
-            this.lyricText = this.lyric.split("\n");
-            this.getLyrics();
-          });
-            this.audioService.getSongById(this.audioIndex)
-              .subscribe((audio: Song) => {
-                this.selectedAudio = audio;
-                this.audioUrl = this.selectedAudio.songs[0].mp3Url;
-                this.myAudio.src = this.audioUrl;
-              });
-
-        this.createAudio();
-        return {};
-
-    });
-*******/
 
 
 
