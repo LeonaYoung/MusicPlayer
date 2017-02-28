@@ -10,8 +10,7 @@ import { AudioListComponent } from './audio-list/audio-list.component';
 import { AudioItemComponent } from './audio-list/audio-item.component';
 import { AudioService } from './audio.service';
 import { routing } from './app.routing';
-import { HeaderComponent } from './header.component';
-import { AudioRecommendComponent } from './audio-recommend/audio-recommend.component';
+
 
 @NgModule({
   declarations: [
@@ -19,9 +18,7 @@ import { AudioRecommendComponent } from './audio-recommend/audio-recommend.compo
     AudioTimePipe,
     AudioPlayerComponent,
     AudioListComponent,
-    AudioItemComponent,
-    HeaderComponent,
-    AudioRecommendComponent
+    AudioItemComponent
   ],
   imports: [
     BrowserModule,

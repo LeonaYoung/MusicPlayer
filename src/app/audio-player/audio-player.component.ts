@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy ,  trigger, state, style, transition, animate} from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate} from '@angular/core';
 import { Subscription } from "rxjs";
-import { ActivatedRoute, Router,Params } from "@angular/router";
-
-import 'rxjs/add/operator/switchMap';
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { AudioService }  from '../audio.service';
 import { error } from "util";
 
 import { AudioList } from '../audio.list';
 import { Song } from '../audio';
-import {Lyrc} from '../lyrc';
+import { Lyrc } from '../lyrc';
 
 @Component({
   selector: 'bp-audio-player',
@@ -36,7 +34,6 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   audiosLength: number;
   private subscription: Subscription;
   private audioList: AudioList;
-
   lyric:string;
 
   constructor(private audioService: AudioService,
@@ -45,7 +42,6 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(){
-
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         this.audioIndex = params['id'];
@@ -77,11 +73,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
           });
         this.createAudio();
       });
-    //this.getLyrics();
   }
-
-
-
 
 
   private myAudio: HTMLAudioElement;
@@ -208,7 +200,6 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
         let time = min * 60 + sec;
         this.lyricTime[i] = time;
       }
-      //this.lyricTime[i] = time;
     }
 
     //去除歌词数组中为空的对象，以及时间戳数组中对应的对象

@@ -1,7 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { AudioService } from '../audio.service';
-import { MyAudio } from '../my-audio';
 import { AudioList } from '../audio.list';
 
 @Component({
@@ -12,8 +11,7 @@ import { AudioList } from '../audio.list';
 export class AudioListComponent implements OnInit {
   private audioList: AudioList;
 
-  constructor(private audioService: AudioService) {
-  }
+  constructor(private audioService: AudioService) {}
 
   ngOnInit() {
     this.audioService
