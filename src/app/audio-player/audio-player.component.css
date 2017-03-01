@@ -135,14 +135,13 @@ input[type="range"]::-webkit-slider-thumb {
 
 #lyr {
     height: 74%;   /*不能设置为auto*/
-    width: 100%;
-    overflow: scroll;
+    width: 370px;
+    overflow: scroll;  /*使歌词框内容滚动*/
     text-align: center;
     line-height: 30px;
     letter-spacing: 0.4px;
-    padding-bottom: 200px;
-    padding-top: 200px;
-    width: 370px;
+    padding-bottom: 200px;  /*使歌词结束的最后一行位于歌词框某位置*/
+    padding-top: 200px;  /*使歌词开始的第一行位于歌词框某位置*/
     font-size: 18px;
 }
 

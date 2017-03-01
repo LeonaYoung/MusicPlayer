@@ -142,6 +142,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       track.style.backgroundSize=this.completed/10 + '% 100%';
     }
 
+    //展示歌词
+
     let div1 = document.getElementById('lyr');
     document.getElementById("lyr").innerHTML = " ";
 
@@ -155,7 +157,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       else if (this.myAudio.currentTime < this.lyricTime[this.lyricTime.length - 1]) {
         for (let k = 0; k < this.lyricTime.length; k++) {
           if (this.lyricTime[k] <= this.myAudio.currentTime && this.myAudio.currentTime < this.lyricTime[k + 1]) {
-            this.scrollh = k * 25;
+            this.scrollh = k * 30;
             div1.innerHTML += "<font color=gainsboro  style=font-weight:bold>" + this.lyricText[k] + "</font><br>";
           } else{
             div1.innerHTML += this.lyricText[k] + "<br>";
@@ -169,15 +171,12 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       div1.innerHTML += "<font  color=gainsboro  style=font-weight:bold>" + this.lyricText[this.lyricText.length - 1] + "</font><br>";
     }
 
-    if (Math.floor(this.myAudio.currentTime) == this.lyricTime[this.scrollh / 25]) {
-      document.getElementById("lyr").scrollTop = this.scrollh;
+    if (Math.floor(this.myAudio.currentTime) == this.lyricTime[this.scrollh / 30]) {
+      document.getElementById("lyr").scrollTop = this.scrollh;  //设置滚动条的垂直偏移量，使当前歌词总在屏幕固定位置高亮
     }
   }
 
   getLyrics() {
-    //将歌词字符串拆分成数组
-    //this.lyricText = this.lyric.split("\n");
-
     //去除数组中为空的字符串
     for (let i = 0; i < this.lyricText.length; i++) {
       if (this.lyricText[i] == '') {
@@ -187,10 +186,10 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
     //获取歌词数组和时间戳数组
     for (let i = 0; i < this.lyricText.length; i++) {
-      let lyric = decodeURIComponent(this.lyricText[i]);
-      let timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
-      let timeRegExpArr = lyric.match(timeReg);
-      if (!timeRegExpArr) continue;
+      let lyric = decodeURIComponent(this.lyricText[i]);  //对 encodeURIComponent() 函数编码的 URI 进行解码
+      let timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;  //时间戳正则匹配
+      let timeRegExpArr = lyric.match(timeReg);   //返回匹配到的字符串数组
+      if (!timeRegExpArr) continue;               //continue 用于跳过循环中的一个迭代
       this.lyricText[i] = lyric.replace(timeReg, '');
 
       for (let k = 0, h = timeRegExpArr.length; k < h; k++) {

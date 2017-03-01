@@ -9,14 +9,13 @@ import 'rxjs/add/operator/toPromise';
 import { Song } from './audio';
 import { AudioList } from './audio.list';
 import {Lyrc} from './lyrc';
-import { encode } from "punycode";
 
 @Injectable()
 export class AudioService {
 
   private baseUrl = 'http://api.tlbhajxc.com';
   private songUrl = this.baseUrl + '/songs/';
-  private playListUrl = (this.baseUrl + '/search/le');
+  private playListUrl = (this.baseUrl + '/search/ni');
   private songLyric = this.baseUrl + '/lyrc/';
 
   constructor(private http: Http) {
