@@ -35,6 +35,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   private subscription: Subscription;
   private audioList: AudioList;
   lyric:string;
+  state; //对应动画中的state状态
 
   constructor(private audioService: AudioService,
               private route: ActivatedRoute,
@@ -135,6 +136,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   private scrollh = 0;
 
   onTimeUpdate(e) {
+    //进度条填充
     if (this.isPlay && this.myAudio.duration > 0) {
       this.progress = this.myAudio.currentTime;
       this.completed = Math.floor((this.myAudio.currentTime / this.myAudio.duration) * 1000);
@@ -256,19 +258,12 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       this.state = 'play';  //唱片机动画应处于播放状态
       this.int = setInterval(()=>{
         var image = document.getElementById('img-cycle');
-        image.style.webkitTransform +="rotate(0.5deg)"
-      },56);
+        image.style.webkitTransform +="rotate(0.5deg)"},56);
     } else {
       this.myAudio.pause();
       this.state = 'pause';   //唱片机动画应处于暂停状态
       clearInterval(this.int);
     }
-  }
-
-  //动画转场
-  state;
-  toggleState(){
-    this.state = (this.state === 'active' ? 'inactive' : 'active');
   }
 
   isCycle = true;

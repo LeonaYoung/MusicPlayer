@@ -16,8 +16,6 @@
         </div>
         <div (click)="changeLyricOrCd()" [hidden]="!lyricOrCd" id="lyr">
         </div>
-
-        <!-- <p>{{line}}</p>    -->
     </div>
 
     <div class="sliderbar">
@@ -34,7 +32,7 @@
                            min="0"
                            max="1000"
                            step="1"
-                           [(ngModel)]="completed"
+                           value="{{completed}}"
                            (input)="changeRange(input.value)"
                            #input>
                 </div>

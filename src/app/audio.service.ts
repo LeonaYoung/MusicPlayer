@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Song } from './audio';
 import { AudioList } from './audio.list';
-import {Lyrc} from './lyrc';
+import { Lyrc } from './lyrc';
 
 @Injectable()
 export class AudioService {
