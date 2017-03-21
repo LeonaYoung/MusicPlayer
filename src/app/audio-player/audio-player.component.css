@@ -141,7 +141,7 @@ input[type="range"]::-webkit-slider-thumb {
     letter-spacing: 0.4px;
     padding-bottom: 200px;  /*使歌词结束的最后一行位于歌词框某位置*/
     padding-top: 200px;  /*使歌词开始的第一行位于歌词框某位置*/
-    font-size: 18px;
+    font-size: 16px;
     color: #202020;
 }
 
