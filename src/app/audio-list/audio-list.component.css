@@ -1,0 +1,11 @@
+.list-group,h1{
+    padding-left: 10px;
+}
+
+h1 {
+    color:#E8E8E8;
+}
+
+.list{
+    height: 100vh;
+}

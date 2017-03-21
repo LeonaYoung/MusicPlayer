@@ -1,7 +1,6 @@
 .player {
     width: auto;
-    height: 100vh;   /*使播放页面高度沾满一屏*/
-    background-color: #787878;
+    height: 100vh;   /*使播放页面高度和屏幕高度一样viewport*/
     margin:0;
     padding: 0;
 }
@@ -143,12 +142,14 @@ input[type="range"]::-webkit-slider-thumb {
     padding-bottom: 200px;  /*使歌词结束的最后一行位于歌词框某位置*/
     padding-top: 200px;  /*使歌词开始的第一行位于歌词框某位置*/
     font-size: 18px;
+    color: #202020;
 }
 
 p:first-line {
     font-size: 20px;
     color: #000;
 }
+
 
 /*待解决问题：cycle和dish水平方向随屏幕宽度居中
 {

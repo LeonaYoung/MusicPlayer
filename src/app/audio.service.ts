@@ -15,7 +15,7 @@ export class AudioService {
 
   private baseUrl = 'http://api.tlbhajxc.com';
   private songUrl = this.baseUrl + '/songs/';
-  private playListUrl = (this.baseUrl + '/search/ni');
+  private playListUrl = (this.baseUrl + '/search/chen');
   private songLyric = this.baseUrl + '/lyrc/';
 
   constructor(private http: Http) {

@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate} from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate, OnChanges } from '@angular/core';
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
+
+import 'rxjs/add/operator/switchMap';
 
 import { AudioService }  from '../audio.service';
 import { error } from "util";
@@ -8,6 +10,7 @@ import { error } from "util";
 import { AudioList } from '../audio.list';
 import { Song } from '../audio';
 import { Lyrc } from '../lyrc';
+import { global } from "../global";
 
 @Component({
   selector: 'bp-audio-player',
@@ -16,9 +19,9 @@ import { Lyrc } from '../lyrc';
   animations: [
     trigger('audioState', [
       state('play', style({
-        transform:'rotate(0deg)'
+        transform: 'rotate(0deg)'
       })),
-      state('pause',   style({
+      state('pause', style({
         transform: 'rotate(-30deg)'
       })),
       transition('play => pause', animate('400ms ease-in')),
@@ -27,22 +30,24 @@ import { Lyrc } from '../lyrc';
   ]
 })
 
-export class AudioPlayerComponent implements OnInit,OnDestroy {
+export class AudioPlayerComponent implements OnInit, OnDestroy {
   selectedAudio: Song;
   audioUrl: string;
   audioIndex: number;
   audiosLength: number;
   private subscription: Subscription;
   private audioList: AudioList;
-  lyric:string;
+  lyric: string;
   state; //对应动画中的state状态
 
   constructor(private audioService: AudioService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router
+              ) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    console.log('ngoninit');
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         this.audioIndex = params['id'];
@@ -58,24 +63,25 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
                 this.selectedAudio = audio;
                 this.audioUrl = this.selectedAudio.songs[0].mp3Url;
                 this.myAudio.src = this.audioUrl;
+                this.playOrPause();
               });
 
             this.audioService
               .getLyricBySongId(this.audioList.result.songs[this.audioIndex].id)
               .subscribe((lyric1: Lyrc) => {
-                  if(lyric1.hasOwnProperty('lrc')){
-                    this.lyric = lyric1.lrc.lyric;  //有些歌的歌词数据没有lrc 字段
-                    this.lyricText = this.lyric.split("\n");
-                    this.getLyrics();
-                  }else {
-                    console.log('meiyouzhaodaogeci');
-                  }
+                if (lyric1.hasOwnProperty('lrc')) {
+                  this.lyric = lyric1.lrc.lyric;  //有些歌的歌词数据没有lrc 字段
+                  this.lyricText = this.lyric.split("\n");
+                  this.getLyrics();
+                } else {
+                  console.log('meiyouzhaodaogeci');
+                }
               });
           });
         this.createAudio();
+        //this.playOrPause();
       });
   }
-
 
   private myAudio: HTMLAudioElement;
   public isPlay = false;
@@ -89,9 +95,12 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
 
   createAudio() {
-    this.myAudio = new Audio();
-    // this.myAudio.src = this.audioUrl;
-
+    if (global.audio !=null) {
+      this.myAudio = global.audio;
+    } else {
+      this.myAudio = new Audio();
+      global.audio = this.myAudio;
+    }
 
     this.myAudio.addEventListener("timeupdate", (e) => {
       this.onTimeUpdate(e);
@@ -130,7 +139,6 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       //console.log(this.myAudio.networkState);
     }, false);
 
-    this.playOrPause();
   }
 
   private scrollh = 0;
@@ -141,7 +149,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       this.progress = this.myAudio.currentTime;
       this.completed = Math.floor((this.myAudio.currentTime / this.myAudio.duration) * 1000);
       var track = document.getElementById('slider-up');
-      track.style.backgroundSize=this.completed/10 + '% 100%';
+      track.style.backgroundSize = this.completed / 10 + '% 100%';
     }
 
     //展示歌词
@@ -161,7 +169,7 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
           if (this.lyricTime[k] <= this.myAudio.currentTime && this.myAudio.currentTime < this.lyricTime[k + 1]) {
             this.scrollh = k * 30;
             div1.innerHTML += "<font color=gainsboro  style=font-weight:bold>" + this.lyricText[k] + "</font><br>";
-          } else{
+          } else {
             div1.innerHTML += this.lyricText[k] + "<br>";
           }
         }
@@ -252,13 +260,15 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   }
 
   int;
+
   playOrPause() {
     if (this.myAudio.paused) {
       this.myAudio.play();
       this.state = 'play';  //唱片机动画应处于播放状态
-      this.int = setInterval(()=>{
+      this.int = setInterval(() => {
         var image = document.getElementById('img-cycle');
-        image.style.webkitTransform +="rotate(0.5deg)"},56);
+        image.style.webkitTransform += "rotate(0.5deg)"
+      }, 56);
     } else {
       this.myAudio.pause();
       this.state = 'pause';   //唱片机动画应处于暂停状态
@@ -289,8 +299,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
   }
 
   playForward() {
-    this.myAudio.pause();
     clearInterval(this.int);
+    this.playOrPause();
     if (this.audioIndex == (this.audiosLength - 1)) {
       this.audioIndex = 0;
       this.router.navigate(['/list', this.audioIndex]);
@@ -298,11 +308,13 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
       this.audioIndex = ++this.audioIndex;
       this.router.navigate(['/list', this.audioIndex]);
     }
+    console.log('playforward');
+    console.log('pause1 '+this.myAudio.paused);
   }
 
   playBackward() {
-    this.myAudio.pause();
     clearInterval(this.int);
+    this.playOrPause();
     if (this.audioIndex == 0) {
       this.audioIndex = this.audiosLength - 1;
       this.router.navigate(['/list', this.audioIndex]);
@@ -347,6 +359,8 @@ export class AudioPlayerComponent implements OnInit,OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    clearInterval(this.int);
+    console.log('destroy');
   }
 
 }
